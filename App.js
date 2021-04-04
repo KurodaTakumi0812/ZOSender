@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import firebase from 'firebase';
 
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,7 +11,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 import PushAnnouncementScreen from './src/screens/PushAnnouncementScreen';
 import PushNotificationScreen from './src/screens/PushNotificationScreen';
 
+import { firebaseConfig } from './env';
+
 const Tab = createBottomTabNavigator();
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+require('firebase/firestore');
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 export default function App() {
   return (
