@@ -15,9 +15,9 @@ export default function PushAnnouncementScreen() {
     }else{
       const db = firebase.firestore();
       const ref = db.collection('announcements')
-      ref.onSnapshot((snapshot)=>{
+      ref.get().then((doc)=>{
         const announcementsList=[];
-        snapshot.forEach((doc)=>{
+        doc.forEach((doc)=>{
           const data = doc.data();
           announcementsList.push({
             id: doc.id,
@@ -43,22 +43,37 @@ export default function PushAnnouncementScreen() {
   };
 
   function pushFirebase(id){
-    console.log(id);
-    const db = firebase.firestore();
-    const ref = db.collection('announcements')
-    ref.doc('test').set({
-      body: `${body}`,
-      title: `${title}`,
-      date: new Date(),
-    },{ merge:true})
-      .then(()=>{
-        Alert.alert('お知らせを追加しました')
-        setTitle('');
-        setBody('');
-      })
-      .catch(()=>{
-        Alert.alert('サーバー書き込みエラー');
-      });
+    Alert.alert(
+      '確認',
+      'お知らせに追加してもよろしいですか？',
+      [
+        {
+          text: 'cancel',
+          onPress: () => { },
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            const db = firebase.firestore();
+            const ref = db.collection('announcements')
+            ref.doc(id).set({
+              body: `${body}`,
+              title: `${title}`,
+              date: new Date(),
+            },{ merge:true})
+            .then(()=>{
+              Alert.alert('お知らせを追加しました')
+              setTitle('');
+              setBody('');
+            })
+            .catch(()=>{
+              Alert.alert('サーバー書き込みエラー');
+            });
+          }
+        },
+      ],
+    );
   }
 
   return (
