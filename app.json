@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -20,10 +20,13 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode":1,
+      "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/AdaptiveIconF.png",
+        "backgroundImage": "./assets/AdaptiveIconB.png"
+      },
+      "package": "com.darkro.ZOSender"
     },
     "web": {
       "favicon": "./assets/favicon.png"
